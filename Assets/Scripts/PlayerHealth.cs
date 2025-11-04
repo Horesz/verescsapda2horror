@@ -23,12 +23,18 @@ public class PlayerHealth : MonoBehaviour
     bool dead = false;
     Vector3 initialPosition;
 
+    // keep track of the previous bodyType so we can restore it after respawn
+    RigidbodyType2D previousBodyType = RigidbodyType2D.Dynamic;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<Collider2D>();
         audioSource = GetComponent<AudioSource>();
         initialPosition = transform.position;
+
+        if (rb != null)
+            previousBodyType = rb.bodyType;
     }
 
     void Start()
@@ -67,17 +73,29 @@ public class PlayerHealth : MonoBehaviour
         var controller = GetComponent<PlayerController>();
         if (controller) controller.enabled = false;
 
-        rb.linearVelocity = Vector2.zero;
-        rb.isKinematic = true;
-        col.enabled = false;
+        // zero velocity and disable physics interactions by making the body kinematic (store previous)
+        if (rb != null)
+        {
+            rb.linearVelocity = Vector2.zero;
+            previousBodyType = rb.bodyType;
+            rb.bodyType = RigidbodyType2D.Kinematic;
+        }
+
+        if (col != null) col.enabled = false;
 
         yield return new WaitForSeconds(respawnDelay);
 
         // move to respawn
         if (respawnPoint != null) transform.position = respawnPoint.position;
 
-        rb.isKinematic = false;
-        col.enabled = true;
+        // restore physics
+        if (rb != null)
+        {
+            rb.bodyType = previousBodyType;
+            rb.linearVelocity = Vector2.zero;
+        }
+
+        if (col != null) col.enabled = true;
         if (controller) controller.enabled = true;
 
         dead = false;
