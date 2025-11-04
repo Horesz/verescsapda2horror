@@ -16,6 +16,7 @@ public class LevelCompleteTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+
             int kovetkezoLevel = palyaSorszama + 1;
 
             int maxLevelElert = PlayerPrefs.GetInt(saveKey, 1);
