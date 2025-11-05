@@ -20,6 +20,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SecondMap.unity
     guid: b2968ef3102c65048a9c478bd819efc3
+  - enabled: 1
+    path: Assets/Scenes/EndScene.unity
+    guid: c55cce02850bd114fba46ea434dd7d19
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
