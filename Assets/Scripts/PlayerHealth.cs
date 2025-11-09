@@ -64,6 +64,18 @@ public class PlayerHealth : MonoBehaviour
         if (deathVFX) Instantiate(deathVFX, transform.position, Quaternion.identity);
         if (audioSource && deathSFX) audioSource.PlayOneShot(deathSFX);
 
+        Debug.Log("[PlayerHealth] Die() called for " + gameObject.name);
+        var spawner = GetComponent<SpawnBloodOnDeath>();
+        if (spawner != null)
+        {
+            Debug.Log("[PlayerHealth] Calling spawner.SpawnAt at " + transform.position);
+            spawner.SpawnAt(transform.position);
+        }
+        else
+        {
+            Debug.LogWarning("[PlayerHealth] No SpawnBloodOnDeath component found on " + gameObject.name);
+        }
+
         StartCoroutine(RespawnRoutine());
     }
 
