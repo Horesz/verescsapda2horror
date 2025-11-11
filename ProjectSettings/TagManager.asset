@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - EnemyWall
   layers:
   - Default
   - TransparentFX
@@ -17,8 +18,8 @@ TagManager:
   - Ground
   - Trap
   - Checkpoint
-  - 
-  - 
+  - Enemy
+  - Projectiles
   - 
   - 
   - 
@@ -41,5 +42,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Projectiles
+    uniqueID: 3983873229
+    locked: 0
   m_RenderingLayers:
   - Default
+  - Projectiles

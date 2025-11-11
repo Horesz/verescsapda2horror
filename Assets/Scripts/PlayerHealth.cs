@@ -26,6 +26,10 @@ public class PlayerHealth : MonoBehaviour
     // keep track of the previous bodyType so we can restore it after respawn
     RigidbodyType2D previousBodyType = RigidbodyType2D.Dynamic;
 
+    // Public property for RespawnManager to check
+    public bool isDead { get; private set; } = false;
+    public bool isAlive => !isDead;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -55,6 +59,8 @@ public class PlayerHealth : MonoBehaviour
     {
         if (dead) return;
         dead = true;
+        isDead = true; // SET THE PUBLIC PROPERTY SO RESPAWNMANAGER DETECTS IT
+        Debug.Log("[PlayerHealth] Player died! isDead is now true.");
 
         // decrement lives even if it goes negative (infinite lives)
         lives--;
@@ -63,6 +69,18 @@ public class PlayerHealth : MonoBehaviour
         // VFX/SFX
         if (deathVFX) Instantiate(deathVFX, transform.position, Quaternion.identity);
         if (audioSource && deathSFX) audioSource.PlayOneShot(deathSFX);
+
+        Debug.Log("[PlayerHealth] Die() called for " + gameObject.name);
+        var spawner = GetComponent<SpawnBloodOnDeath>();
+        if (spawner != null)
+        {
+            Debug.Log("[PlayerHealth] Calling spawner.SpawnAt at " + transform.position);
+            spawner.SpawnAt(transform.position);
+        }
+        else
+        {
+            Debug.LogWarning("[PlayerHealth] No SpawnBloodOnDeath component found on " + gameObject.name);
+        }
 
         StartCoroutine(RespawnRoutine());
     }
@@ -99,11 +117,21 @@ public class PlayerHealth : MonoBehaviour
         if (controller) controller.enabled = true;
 
         dead = false;
+        isDead = false; // RESET THE PUBLIC PROPERTY SO WE CAN DIE AGAIN NEXT TIME
+        Debug.Log("[PlayerHealth] Player respawned!");
     }
 
     // Used by a checkpoint to set the respawn position
     public void SetRespawnPoint(Transform point)
     {
         respawnPoint = point;
+    }
+
+    // Call this if RespawnManager or another system needs to force respawn
+    public void Respawn()
+    {
+        isDead = false;
+        dead = false;
+        Debug.Log("[PlayerHealth] Player respawn called externally.");
     }
 }
