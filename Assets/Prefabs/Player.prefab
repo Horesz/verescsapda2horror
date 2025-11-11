@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 2824854649535576426}
   - component: {fileID: 8261770750681779585}
   - component: {fileID: 4634310323454380930}
+  - component: {fileID: 8030454515738878464}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -360,6 +361,29 @@ MonoBehaviour:
   unparentOnSpawn: 1
   offset: {x: 0, y: 0, z: 0}
   autoDestroyAfter: 5
+--- !u!114 &8030454515738878464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9078281972881107739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa770172edc4ead43807a1961efba195, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  appleAmmo: 0
+  projectilePrefab: {fileID: 0}
+  firePoint: {fileID: 0}
+  projectileSpeed: 12
+  projectileLifetime: 3
+  fireInput: Fire1
+  shootCooldown: 0.25
+  visual: {fileID: 1119164836886344805}
+  shootTrigger: Attack
+  shootClip: {fileID: 0}
+  shootVolume: 1
 --- !u!1 &9105357904113100667
 GameObject:
   m_ObjectHideFlags: 0
